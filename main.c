@@ -20,14 +20,17 @@ int fines();
 void addBook();
 void filereadbooks(); 
 
-
+//Global variables       -----------------------------------
 int finesamount = 500;
-int number_of_books = 10;
+int no_of_books = 0;
 int lended_books = 5;
 char books[100][100];
 char author[100][100];
 int copies[100];
-
+char lender[100][100];
+char lendbook[100][100];
+int date[100];
+//-------------------------------------------------------------------
 int main(void)
 {	
 	
@@ -37,6 +40,7 @@ int main(void)
 	system("cls");
 	printf("\t\t\t\tLIBRARY MANAGEMENT SYSTEM\n");
 	printf("\t\t\t\t\t Login as a:\n\t\t\t 1 - Librarian\n\t\t\t 2 - Student\n\t\t\t 3 - Exit \n");
+	filereadbooks();
 	printf("\nEnter your option : ");
 	scanf("%d", &option);
 	if (option == 1)
@@ -62,11 +66,17 @@ int main(void)
 void filereadbooks()
 {
 	char *token;
-	FILE *fp;
+	FILE *fp = NULL;
 	fp = fopen(BOOKS, "r");
 	char buffer [1024];
 	int i = 0;
 	srand(time(0));
+	if (fp == NULL)
+	{
+		printf("Error \n");
+		
+	}
+	rewind(fp);
 	while(fgets(buffer, 1024, fp) != NULL)
 	{
 		
@@ -74,12 +84,12 @@ void filereadbooks()
 		strcpy(books[i], token);
 		token = strtok(NULL, ",");
 		strcpy(author[i], token);
-		printf("%s\n", books[i]);
-		printf("%s\n", author[i]);
 		copies[i] = (rand() % 25) + 1;
-		printf("%d\n", copies[i]);
 		++i;
 	}
+	no_of_books = i;
+	fclose(fp);
+	fp = NULL;
 }
 
 
@@ -110,7 +120,7 @@ void lib()
     {
         addBook();
     }
-    else if (option ==5)
+    else if (option == 5)
     {
 		return;
 	}
@@ -222,28 +232,50 @@ int auth()
 void bookmenu()
 {
 
-	/*
-	printf("-----------------------------------Books page------------------------------------------\n");
+	system("cls");
+	printf("--------------------------------------Books page--------------------------------------------------------------------------\n");
+	char bookgarbage;
 	int i = 0;
-	for (i = 0; i < number_of_books; i++)
+	printf("%3s %25s %20s %6s\n","SNo", "Title", "Author", "Copies");
+	for (i = 0; i < 5; i++)
 	{
-		printf("%d - ", i+1);
-		puts(arr[i]);
+		printf("%3d %25s %20s %6d\n", i+1, books[i], author[i], copies[i]);
 	}
-	*/
+	printf("\nPress Enter to exit : ");
+	scanf(" %c", &bookgarbage);
+	return;
 }
 
 void lendings()
 {
-/*
-	int i;
-	printf("-----------------------------------Lending page------------------------------------------\n");
-	for (i = 0; i < lended_books; i++)
+char *token;
+	FILE *fp = NULL;
+	fp = fopen("Lending.txt", "r");
+	char buffer [1024];
+	int i = 0;
+	srand(time(0));
+	if (fp == NULL)
 	{
-		printf("%d - : ",i);
-		puts(lend[i]);
+		printf("Error \n");
+		
 	}
-	*/
+	rewind(fp);
+	while(fgets(buffer, 1024, fp) != NULL)
+	{
+		
+		token = strtok(buffer, ",");
+		strcpy(lender[i], token);
+		printf("%s\n", lender[i]);
+		token = strtok(NULL, ",");
+		strcpy(lendbook[i], token);
+		printf("%s\n", lendbook[i]);
+		token = strtok(NULL, ",");
+		sscanf(token, "%d", &date[i]);
+		printf("%d", date[i]);
+		++i;
+	}
+	fclose(fp);
+	fp = NULL;
 }
 int fines()
 {
