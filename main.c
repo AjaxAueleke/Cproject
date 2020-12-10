@@ -32,6 +32,7 @@ char lender[100][100];
 char lendbook[100][100];
 int date[100];
 int no_of_books;
+int no_of_lendings;
 //-------------------------------------------------------------------
 int main(void)
 {	
@@ -149,7 +150,7 @@ void stu()
     {
         lendings();
     }
-    else if (option == 2)
+    else if (option == 2 || option == 4)
     {
     	printf("Will not work!");
     	continue;
@@ -196,6 +197,7 @@ void addLender()
 		fprintf( fp,"%s,%s,%d\n", lender[i], lendbook[i], date[i]);
 	}
 	fclose(fp);
+	borrowed_books();
 	fp = NULL;
 	return;
 }
@@ -223,6 +225,7 @@ int auth()
 	c = getch();
 	if (c == 8)
 	{
+		printf("\b");
 		continue;
 	}
 	else {
@@ -271,15 +274,14 @@ void bookmenu()
 
 	system("cls");
 	printf("--------------------------------------Books page--------------------------------------------------------------------------\n");
-	char bookgarbage;
 	int i = 0;
-	printf("%3s %25s %20s %6s\n","SNo", "Title", "Author", "Copies");
-	for (i = 0; i < 5; i++)
+	printf("%3s %35s %30s %6s\n","SNo", "Title", "Author", "Copies");
+	for (i = 0; i < no_of_books; i++)
 	{
-		printf("%3d %25s %20s %6d\n", i+1, books[i], author[i], copies[i]);
+		printf("%3d %35s %30s %6d\n", i+1, books[i], author[i], copies[i]);
 	}
 	printf("\nPress Enter to exit : ");
-	scanf(" %c", &bookgarbage);
+	getch();
 	return;
 }
 
@@ -292,7 +294,6 @@ void lendings()
 		fp = fopen(LENDING, "r");
 		char buffer [1024];
 		int i = 0;
-		srand(time(0));
 		if (fp == NULL)
 		{
 			printf("Error \n");
@@ -314,6 +315,7 @@ void lendings()
 		no_of_lendings = i;
 		fp = NULL;
 		printf("No of lending : %d", no_of_lendings);
+		borrowed_books();
 		getch();
 		return;
 }
@@ -347,7 +349,7 @@ void borrowed_books()
     //Borrowed books by students
     int i;
     printf("%3s %15s %15s %6s\n","SNo", "Student", "Book", "Days Left");
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < no_of_lendings; i++)
 	{
 		printf("%3d %15s %15s %6d\n", i+1, lender[i], lendbook[i], date[i] / 24);
 	}
@@ -367,7 +369,7 @@ void addBook()
 	strcpy(books[no_of_books], bktemp);
 	printf("Enter the name of the author : ");
 	scanf(" %[^\n]s", atemp);
-	strcpy(author[no_of_books], title);
+	strcpy(author[no_of_books], atemp);
 	
 	printf("Enter number of books : ");
 	scanf(" %d", copies[no_of_books]);
@@ -383,5 +385,6 @@ void addBook()
 	}
 	fclose(fp);
 	fp = NULL;
+	bookmenu();
 	return;
 }
