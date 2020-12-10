@@ -30,6 +30,7 @@ int copies[100];
 char lender[100][100];
 char lendbook[100][100];
 int date[100];
+int no_of_books;
 //-------------------------------------------------------------------
 int main(void)
 {	
@@ -41,6 +42,7 @@ int main(void)
 	printf("\t\t\t\tLIBRARY MANAGEMENT SYSTEM\n");
 	printf("\t\t\t\t\t Login as a:\n\t\t\t 1 - Librarian\n\t\t\t 2 - Student\n\t\t\t 3 - Exit \n");
 	filereadbooks();
+	lendings();
 	printf("\nEnter your option : ");
 	scanf("%d", &option);
 	if (option == 1)
@@ -101,7 +103,7 @@ void lib()
 	system("cls");
 	printf("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     printf("\t\t\t\t\tWelcome Librarian!\n");
-    printf("\t\t\t1-View Inventory\n\t\t\t2-View Lendings\n\t\t\t3-Fines\n\t\t\t4-Add a book\n\t\t\t5-exit\n\t\t\t");
+    printf("\t\t\t1-View Inventory\n\t\t\t2-View Lendings\n\t\t\t3-Issue a Book\n\t\t\t4-Add a book\n\t\t\t5-exit\n\t\t\t");
     printf("Enter the number associated with the option: ");
     scanf("%d", &option);
     if (option == 1)
@@ -110,11 +112,11 @@ void lib()
     }
     else if (option == 2)
     {
-        lendings();
+        borrowed_books();
     }
     else if (option == 3)
     {
-        fines();
+        addLender();
     }
     else if (option == 4)
     {
@@ -133,7 +135,7 @@ void stu()
     while (1)
 	{
 	system("cls");
-    printf("-------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("-------------------------           Welcome Students!            --------------------------------------------------------------------------\n");
     printf("Welcome Students!\n");
     printf("\n\t\t\t1-View borrowed books\n\t\t\t2-Fines\n\t\t\t3-List books availabe\n\t\t\t4-Lend a book\n\t\t\t5-exit\n");
     printf("Enter the number before the option to choose the action: ");
@@ -161,6 +163,12 @@ void stu()
     }*/
 	}
 }
+
+
+
+
+// Add lender function here
+
 
 
 
@@ -247,7 +255,7 @@ void bookmenu()
 }
 
 void lendings()
-{
+	{
 char *token;
 	FILE *fp = NULL;
 	fp = fopen("Lending.txt", "r");
@@ -265,18 +273,17 @@ char *token;
 		
 		token = strtok(buffer, ",");
 		strcpy(lender[i], token);
-		printf("%s\n", lender[i]);
 		token = strtok(NULL, ",");
 		strcpy(lendbook[i], token);
-		printf("%s\n", lendbook[i]);
 		token = strtok(NULL, ",");
 		sscanf(token, "%d", &date[i]);
-		printf("%d", date[i]);
 		++i;
 	}
 	fclose(fp);
 	fp = NULL;
 }
+
+
 int fines()
 {
 	int late = 50, damaged = 1000, condition;
@@ -301,8 +308,17 @@ int fines()
 
 void borrowed_books()
 {
-    printf("You borrowed these books!");
-    lendings();
+    system("cls");
+    //Borrowed books by students
+    int i;
+    printf("%3s %15s %15s %6s\n","SNo", "Student", "Book", "Days Left");
+    for (i = 0; i < 5; i++)
+	{
+		printf("%3d %15s %15s %6d\n", i+1, lender[i], lendbook[i], date[i] / 24);
+	}
+	printf("\nPress Enter to exit : ");
+	getch();
+    
 }
 
 void addBook()
