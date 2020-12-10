@@ -151,7 +151,8 @@ void stu()
     }
     else if (option == 2)
     {
-        fines();
+    	printf("Will not work!");
+    	continue;
     }
     else if(option==5)
     {
@@ -181,7 +182,7 @@ void addLender()
 	
 	printf("Enter the name of the book : ");
 	scanf(" %[^\n]s", &title);
-	strcpy(lendbook[no_of_lendings], title);
+	strcpy(lendbook[no_of_lendings], atemp);
 	
 	date[no_of_lendings] = 24 * 7;
 	printf("The student has 7 days to return the book.");
@@ -288,7 +289,7 @@ void lendings()
 		
 		char *token;
 		FILE *fp = NULL;
-		fp = fopen("Lending.txt", "r");
+		fp = fopen(LENDING, "r");
 		char buffer [1024];
 		int i = 0;
 		srand(time(0));
@@ -357,17 +358,30 @@ void borrowed_books()
 
 void addBook()
 {
-    /*
-	char name[100];
-    int i;
-    printf("Enter the name of the book you want to add :");
-    fgets(name, sizeof(name), stdin);
-    strcpy(arr[number_of_books], name);
-    number_of_books++;
-    	for (i = 0; i < number_of_books; i++)
+
+	system("cls");
+	char bktemp[20], atemp[20];
+	
+	printf("\n\n\t\tEnter the name of the book : ");
+	scanf(" %[^\n]s", bktemp);
+	strcpy(books[no_of_books], bktemp);
+	printf("Enter the name of the author : ");
+	scanf(" %[^\n]s", atemp);
+	strcpy(author[no_of_books], title);
+	
+	printf("Enter number of books : ");
+	scanf(" %d", copies[no_of_books]);
+	
+	
+	no_of_books++;
+	FILE *fp;
+	fp = fopen(BOOKS, "w");
+	int i;
+	for (i = 0; i < no_of_books; i++)
 	{
-		printf("%d - ", i+1);
-		puts(arr[i]);
+		fprintf( fp,"%s,%s,%d\n", books[i], author[i], copies[i]);
 	}
-	*/
+	fclose(fp);
+	fp = NULL;
+	return;
 }
