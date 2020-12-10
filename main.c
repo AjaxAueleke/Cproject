@@ -182,7 +182,7 @@ void addLender()
 	
 	printf("Enter the name of the book : ");
 	scanf(" %[^\n]s", &title);
-	strcpy(lendbook[no_of_lendings], atemp);
+	strcpy(lendbook[no_of_lendings], title);
 	
 	date[no_of_lendings] = 24 * 7;
 	printf("The student has 7 days to return the book.");
