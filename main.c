@@ -19,6 +19,7 @@ void lendings();
 int fines();
 void addBook();
 void filereadbooks(); 
+void addLender();
 
 //Global variables       -----------------------------------
 int finesamount = 500;
@@ -168,8 +169,35 @@ void stu()
 
 
 // Add lender function here
+void addLender()
+{
 
-
+	system("cls");
+	char name[20], title[20];
+	
+	printf("\n\n\t\tEnter the name of the student : ");
+	scanf(" %[^\n]s", &name);
+	strcpy(lender[no_of_lendings], name);
+	
+	printf("Enter the name of the book : ");
+	scanf(" %[^\n]s", &title);
+	strcpy(lendbook[no_of_lendings], title);
+	
+	date[no_of_lendings] = 24 * 7;
+	printf("The student has 7 days to return the book.");
+	no_of_lendings++;
+	printf("No of lending : %d", no_of_lendings);
+	FILE *fp;
+	fp = fopen("Lending.txt", "w");
+	int i;
+	for (i = 0; i < no_of_lendings; i++)
+	{
+		fprintf( fp,"%s,%s,%d\n", lender[i], lendbook[i], date[i]);
+	}
+	fclose(fp);
+	fp = NULL;
+	return;
+}
 
 
 
@@ -254,35 +282,40 @@ void bookmenu()
 	return;
 }
 
+
 void lendings()
 	{
-char *token;
-	FILE *fp = NULL;
-	fp = fopen("Lending.txt", "r");
-	char buffer [1024];
-	int i = 0;
-	srand(time(0));
-	if (fp == NULL)
-	{
-		printf("Error \n");
 		
-	}
-	rewind(fp);
-	while(fgets(buffer, 1024, fp) != NULL)
-	{
+		char *token;
+		FILE *fp = NULL;
+		fp = fopen("Lending.txt", "r");
+		char buffer [1024];
+		int i = 0;
+		srand(time(0));
+		if (fp == NULL)
+		{
+			printf("Error \n");
+			return;
+		}
+		rewind(fp);
+		while(fgets(buffer, 1024, fp) != NULL)
+		{
 		
-		token = strtok(buffer, ",");
-		strcpy(lender[i], token);
-		token = strtok(NULL, ",");
-		strcpy(lendbook[i], token);
-		token = strtok(NULL, ",");
-		sscanf(token, "%d", &date[i]);
-		++i;
-	}
-	fclose(fp);
-	fp = NULL;
+			token = strtok(buffer, ",");
+			strcpy(lender[i], token);
+			token = strtok(NULL, ",");
+			strcpy(lendbook[i], token);
+			token = strtok(NULL, ",");
+			sscanf(token, "%d", &date[i]);
+			++i;
+		}
+		fclose(fp);
+		no_of_lendings = i;
+		fp = NULL;
+		printf("No of lending : %d", no_of_lendings);
+		getch();
+		return;
 }
-
 
 int fines()
 {
@@ -305,6 +338,7 @@ int fines()
     }
     return finesamount;
 }
+
 
 void borrowed_books()
 {
@@ -336,9 +370,4 @@ void addBook()
 		puts(arr[i]);
 	}
 	*/
-}
-void issue()
-{
-    printf("Enter the book you want to issue");
-
 }
