@@ -1,0 +1,15 @@
+Harry Potter,J.K. Rowling,20
+Da Vinci Code,Dan Brown,7
+The Great Gatsby,F. Scott Fitzgerald,3
+Charlie and the Chocolate Factory,Roald Dahl,9
+Pride and Prejudice,Jane Austen,11
+Gulliver's travels, Jonathan Swift,22
+Frankenstein,  Mary Shelley,5
+The Lord of the Rings,J.R.R. Tolkien,17
+Great Expectations,Great Expectations,13
+Alice's Adventures in Wonderland,Lewis Carroll,14
+Horrid Henry Series,Francesca Simon,22
+H.I.V.E., Mark Walden,14
+Sherlock Holmes, Arthur Conan Doyle,13
+Pinocchio, By Carlo Collodi,21
+The Old Man and the Sea, Ernest Hemingway,11
