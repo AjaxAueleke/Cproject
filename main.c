@@ -5,7 +5,7 @@
 
 
 #define BOOKS "books.txt"
-#define LENDING "lendings.txt"
+#define LENDING "Lending.txt" 
 
 
 
@@ -21,7 +21,7 @@ void addBook();
 void filereadbooks(); 
 void addLender();
 
-//Global variables       -----------------------------------
+//Global variables-----------------------------------
 int finesamount = 500;
 int no_of_books = 0;
 int lended_books = 5;
@@ -41,8 +41,8 @@ int main(void)
 	while (1)
 	{
 	system("cls");
-	printf("\t\t\t\tLIBRARY MANAGEMENT SYSTEM\n");
-	printf("\t\t\t\t\t Login as a:\n\t\t\t 1 - Librarian\n\t\t\t 2 - Student\n\t\t\t 3 - Exit \n");
+	printf("LIBRARY MANAGEMENT SYSTEM\n");
+	printf("Login as a:\n1 - Librarian\n2 - Student\n3 - Exit \n");
 	filereadbooks();
 	lendings();
 	printf("\nEnter your option : ");
@@ -137,7 +137,7 @@ void stu()
     while (1)
 	{
 	system("cls");
-    printf("-------------------------           Welcome Students!            --------------------------------------------------------------------------\n");
+    printf("---------------------------------------Welcome Students!---------------------------------------------------\n");
     printf("Welcome Students!\n");
     printf("\n\t\t\t1-View borrowed books\n\t\t\t2-Fines\n\t\t\t3-List books availabe\n\t\t\t4-Lend a book\n\t\t\t5-exit\n");
     printf("Enter the number before the option to choose the action: ");
@@ -148,7 +148,7 @@ void stu()
     }
     else if (option == 1)
     {
-        lendings();
+        borrowed_books();
     }
     else if (option == 2 || option == 4)
     {
@@ -173,11 +173,10 @@ void stu()
 // Add lender function here
 void addLender()
 {
-
 	system("cls");
 	char name[20], title[20];
 	
-	printf("\n\n\t\tEnter the name of the student : ");
+	printf("\nEnter the name of the student : ");
 	scanf(" %[^\n]s", &name);
 	strcpy(lender[no_of_lendings], name);
 	
@@ -226,6 +225,8 @@ int auth()
 	if (c == 8)
 	{
 		printf("\b");
+		printf(" ");
+		printf("\b");
 		continue;
 	}
 	else {
@@ -257,11 +258,12 @@ int auth()
 		printf("\n\n\t\t\t\t\tPassword Not Found\n");
 		++incorrect;
 		printf("\t\t\t\t\tYou have %d attempt(s) left. Press Enter to continue", 3 - incorrect);
-		scanf("%c", &garbage_variable);
+		getch();
 	}
 	else 
 	{
 		printf("\n\n\t\t\t\t\tPassword Found\n");
+	
 		return 10;
 	}
 	
@@ -314,8 +316,6 @@ void lendings()
 		fclose(fp);
 		no_of_lendings = i;
 		fp = NULL;
-		printf("No of lending : %d", no_of_lendings);
-		borrowed_books();
 		getch();
 		return;
 }
